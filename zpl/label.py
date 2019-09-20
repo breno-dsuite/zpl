@@ -222,6 +222,17 @@ class Label:
             Image.open(io.BytesIO(res)).show()
         except IOError:
             raise Exception("Invalid preview received, mostlikely bad ZPL2 code uploaded.")
+    def url(self, index=0):
+        '''
+        Opens rendered preview using Labelary API.
+        Not all commands are supported, see http://labelary.com for more information.
+        '''
+        try:
+            url = 'http://api.labelary.com/v1/printers/%idpmm/labels/%fx%f/%i/' % (
+                self.dpmm, self.width/25.4, self.height/25.4, index)
+            return f'{url}{self.dumpZPL().encode()}'
+        except IOError:
+            raise Exception("Invalid preview received, mostlikely bad ZPL2 code uploaded.")
 
 
 def __main__():

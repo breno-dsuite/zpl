@@ -216,14 +216,12 @@ class Label:
 
         self.code += barcode_zpl
 
-    def write_qrcode(self, magnification=1, model=2, errorCorrection='Q', mask=7):
+    def write_qrcode(self, text, model=2, magnification=1, errorCorrection='Q', mask=7):
         # guard for only currently allowed bar codes
-        barcode_zpl = '^BQN,%s,%s,%s,%s' % (model,
-                                            magnification,
-                                            errorCorrection,
-                                            mask)
+        barcode_zpl = f'^BQN,{model},{magnification},{errorCorrection},{mask}'
 
         self.code += barcode_zpl
+        self.code += "^FD%s" % text
 
     def dumpZPL(self):
         return self.code+"^XZ"

@@ -221,7 +221,7 @@ class Label:
         barcode_zpl = f'^BQN,{model},{magnification},{errorCorrection},{mask}'
 
         self.code += barcode_zpl
-        self.code += "^FD%s" % text
+        self.code += f"^FDQA,{text}^FS"
 
     def dumpZPL(self):
         return self.code+"^XZ"

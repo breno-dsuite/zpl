@@ -216,6 +216,15 @@ class Label:
 
         self.code += barcode_zpl
 
+    def write_qrcode(self, magnification=1, model=2, errorCorrection='Q', mask=7):
+        # guard for only currently allowed bar codes
+        barcode_zpl = '^BQN,%s,%s,%s,%s' % (model,
+                                            magnification,
+                                            errorCorrection,
+                                            mask)
+
+        self.code += barcode_zpl
+
     def dumpZPL(self):
         return self.code+"^XZ"
 
@@ -244,7 +253,7 @@ class Label:
         try:
             url = 'http://api.labelary.com/v1/printers/%idpmm/labels/%fx%f/%i/' % (
                 self.dpmm, self.width/25.4, self.height/25.4, index)
-            return f'{url}{self.dumpZPL().encode("utf-8")}'
+            return f'{url}{self.dumpZPL()}'
         except IOError:
             raise Exception("Invalid preview received, mostlikely bad ZPL2 code uploaded.")
 

@@ -220,7 +220,7 @@ class Label:
         self.code += f'^BQN,{model},{magnification},{errorCorrection},{mask}'
         self.code += f"^FDQA,{text}"
 
-    def write_linha(self, x=1, y=1, espessura=1):
+    def write_box(self, x=1, y=1, espessura=1):
         self.code += f"^GB{x},{y},{espessura}"
 
     def dumpZPL(self):

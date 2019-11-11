@@ -220,6 +220,10 @@ class Label:
         self.code += f'^BQN,{model},{magnification},{errorCorrection},{mask}'
         self.code += f"^FDQA,{text}"
 
+    def write_ean(self, text, width=2, ratio=3.0, height=100, orientation='N', show_numbers=True):
+        self.code += f'^BY{width},{ratio:.1f}^BE{orientation},{height},{"Y" if show_numbers else "F"},N'
+        self.code += f"^FD{text}"
+
     def write_box(self, x=1, y=1, espessura=1):
         self.code += f"^GB{x},{y},{espessura}"
 

@@ -96,7 +96,7 @@ class Label:
             assert code in [15, 27, 28, 31]
         self.code += "^CI%s" % code
 
-    def _convert_image(self, image, width, height, compression_type='A'):
+    def _convert_image(self, image, width, height, compression_type='A', invert=True):
         '''
         converts *image* (of type PIL.Image) to a ZPL2 format
 
@@ -107,7 +107,10 @@ class Label:
         image = image.resize((int(width*self.dpmm), int(height*self.dpmm)))
         # invert, otherwise we get reversed B/W
         # https://stackoverflow.com/a/38378828
-        image = PIL.ImageOps.invert(image.convert('L')).convert('1')
+        if invert:
+            image = PIL.ImageOps.invert(image.convert('L')).convert('1')
+        else:
+            image = image.convert('1')
 
         if compression_type == "A":
             # return image.tobytes().encode('hex').upper()
@@ -135,7 +138,7 @@ class Label:
 
         return height
 
-    def write_graphic(self, image, width, height=0, compression_type="A"):
+    def write_graphic(self, image, width, height=0, compression_type="A", invert=True):
         """
         embeddes image with given width
 
@@ -148,7 +151,7 @@ class Label:
         totalbytes = math.ceil(width*self.dpmm/8.0)*height*self.dpmm
         bytesperrow = math.ceil(width*self.dpmm/8.0)
 
-        data = self._convert_image(image, width, height, compression_type=compression_type)
+        data = self._convert_image(image, width, height, compression_type=compression_type, invert=invert)
 
         if compression_type == "A":
             self.code += "^GFA,%i,%i,%i,%s" % (len(data), totalbytes, bytesperrow, data)

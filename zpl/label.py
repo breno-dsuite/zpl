@@ -11,10 +11,8 @@ import sys
 import math
 import webbrowser
 import os.path
-try:
-    from urllib.request import urlopen
-except ImportError:
-    from urllib2 import urlopen
+from urllib.request import urlopen
+import urllib.parse
 import io
 
 class Label:
@@ -258,7 +256,7 @@ class Label:
         try:
             url = 'http://api.labelary.com/v1/printers/%idpmm/labels/%fx%f/%i/' % (
                 self.dpmm, self.width/25.4, self.height/25.4, index)
-            return f'{url}{self.dumpZPL()}'
+            return f'{url}{urllib.parse.quote_plus(self.dumpZPL())}'
         except IOError:
             raise Exception("Invalid preview received, mostlikely bad ZPL2 code uploaded.")
 

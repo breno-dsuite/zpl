@@ -34,7 +34,7 @@ class Label:
         self.width = width
         self.dpmm = dpmm
 
-        self.code = "^XA"
+        self.code = "^XA^PW%i" % (self.width * self.dpmm)
 
     def origin(self, x,y):
         """
@@ -262,9 +262,9 @@ class Label:
 
 
 def __main__():
-    l = Label(100,60)
+    l = Label(100, 60)
     height = 0
-    l.origin(0,0)
+    l.origin(0, 0)
     l.write_text("Problem?", char_height=10, char_width=8, line_width=60, justification='C')
     l.endorigin()
 

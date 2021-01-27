@@ -23,7 +23,7 @@ class Label:
     printer dot units.
     '''
 
-    def __init__(self, height, width=110.0, dpmm=12.0):
+    def __init__(self, height, width=110.0, dpmm=12.0, print_speed=6):
         """
         Creates one (or more) ZPL2 labels.
 
@@ -34,7 +34,7 @@ class Label:
         self.width = width
         self.dpmm = dpmm
 
-        self.code = "^XA^PW%i^PR5,5,5" % (self.width * self.dpmm)
+        self.code = "^XA^PW%i^PR%i" % (self.width * self.dpmm, print_speed)
 
     def origin(self, x,y):
         """

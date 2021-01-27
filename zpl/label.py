@@ -34,7 +34,7 @@ class Label:
         self.width = width
         self.dpmm = dpmm
 
-        self.code = "^XA^PW%i" % (self.width * self.dpmm)
+        self.code = "^XA^PW%i^PR5,5,5" % (self.width * self.dpmm)
 
     def origin(self, x,y):
         """
